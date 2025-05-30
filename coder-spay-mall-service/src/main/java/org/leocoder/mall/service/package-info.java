@@ -1,7 +1,7 @@
 /**
  * @author : 程序员Leo
- * @date 2025-05-30 00:26
+ * @date 2025-05-30 11:47
  * @version 1.0
  * @description :
  */
-package org.leocoder;
+package org.leocoder.mall.service;
