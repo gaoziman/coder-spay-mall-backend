@@ -1,7 +1,7 @@
 package org.leocoder.mall.common.convention.exception;
 
 import lombok.Getter;
-import org.leocoder.common.convention.errorcode.IErrorCode;
+import org.leocoder.mall.common.convention.errorcode.IErrorCode;
 import org.springframework.util.StringUtils;
 
 import java.util.Optional;
@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * @author : Leo
  * @version 1.0
- * @date 2024-08-23 11:20
+ * @date 2025-05-29 11:20
  * @description : 抽象项目中三类异常体系，客户端异常、服务端异常以及远程服务调用异常
  */
 @Getter

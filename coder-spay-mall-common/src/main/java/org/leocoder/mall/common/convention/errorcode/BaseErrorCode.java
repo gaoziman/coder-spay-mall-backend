@@ -3,7 +3,7 @@ package org.leocoder.mall.common.convention.errorcode;
 /**
  * @author : Leo
  * @version 1.0
- * @date 2024-08-23 11:19
+ * @date 2025-05-29 11:19
  * @description : 基础错误码定义
  */
 

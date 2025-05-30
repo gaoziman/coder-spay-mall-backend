@@ -3,7 +3,7 @@ package org.leocoder.mall.common.convention.errorcode;
 /**
  * @author : Leo
  * @version 1.0
- * @date 2024-08-23 11:18
+ * @date 2025-05-29 11:18
  * @description : 平台错误码接口
  */
 public interface IErrorCode {

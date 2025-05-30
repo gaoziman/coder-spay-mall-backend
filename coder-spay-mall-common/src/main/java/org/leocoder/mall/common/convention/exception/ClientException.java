@@ -7,7 +7,7 @@ import org.leocoder.mall.common.convention.errorcode.IErrorCode;
 /**
  * @author : Leo
  * @version 1.0
- * @date 2024-08-23 11:20
+ * @date 2025-05-29 11:20
  * @description : 客户端异常
  */
 public class ClientException extends AbstractException {

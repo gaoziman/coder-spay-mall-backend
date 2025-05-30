@@ -10,7 +10,7 @@ import java.util.Optional;
 /**
  * @author : Leo
  * @version 1.0
- * @date 2024-08-23 11:22
+ * @date 2025-05-29 11:22
  * @description : 服务端异常
  */
 public class ServiceException extends AbstractException {
