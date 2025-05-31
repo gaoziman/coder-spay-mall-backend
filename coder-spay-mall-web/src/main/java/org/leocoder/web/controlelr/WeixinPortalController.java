@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * 微信服务对接，对接地址：<a href="http://xfg-studio.natapp1.cc/api/v1/weixin/portal/receive">/api/v1/weixin/portal/receive</a>
@@ -61,14 +64,17 @@ public class WeixinPortalController {
                        @RequestParam("nonce") String nonce,
                        @RequestParam("openid") String openid,
                        @RequestParam(name = "encrypt_type", required = false) String encType,
-                       @RequestParam(name = "msg_signature", required = false) String msgSignature) {
+                       @RequestParam(name = "msg_signature", required = false) String msgSignature,
+                       HttpServletRequest request) {
         try {
             log.info("接收微信公众号信息请求{}开始 {}", openid, requestBody);
             // 消息转换
             MessageTextEntity message = XmlUtil.xmlToBean(requestBody, MessageTextEntity.class);
 
             if ("event".equals(message.getMsgType()) && "SCAN".equals(message.getEvent())) {
-                loginService.saveLoginState(message.getTicket(), openid);
+                String loginIp = getIpAddress(request);
+                String loginTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+                loginService.saveLoginState(message.getTicket(), openid, loginTime, loginIp, "江苏常州");
                 return buildMessageTextEntity(openid, "登录成功");
             }
 
@@ -88,6 +94,30 @@ public class WeixinPortalController {
         res.setMsgType("text");
         res.setContent(content);
         return XmlUtil.beanToXml(res);
+    }
+
+
+    /**
+     *  获取请求的IP地址
+     * @param request 请求对象
+     * @return IP地址
+     */
+    private String getIpAddress(HttpServletRequest request) {
+        String ip = request.getHeader("x-forwarded-for");
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getHeader("WL-Proxy-Client-IP");
+        }
+        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+            ip = request.getRemoteAddr();
+        }
+        // 多级代理可能返回多个ip，第一个为真实ip
+        if (ip != null && ip.contains(",")) {
+            ip = ip.split(",")[0].trim();
+        }
+        return ip;
     }
 
 }

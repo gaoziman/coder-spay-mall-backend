@@ -1,12 +1,11 @@
 package org.leocoder.web;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
-import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * @author : 程序员Leo
@@ -14,11 +13,14 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * @date 2025-05-30 11:46
  * @description : 启动类
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {
+        "org.leocoder.web",
+        "org.leocoder.mall.service",
+        "org.leocoder.mall.dao"
+})
 @Configurable
-@EnableScheduling
-@ComponentScan("org.leocoder")
-public class MainApplication {
+@MapperScan("org.leocoder.mall.dao")
+public class MainApplication {ˆ
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(MainApplication.class, args);
         Environment environment = context.getBean(Environment.class);

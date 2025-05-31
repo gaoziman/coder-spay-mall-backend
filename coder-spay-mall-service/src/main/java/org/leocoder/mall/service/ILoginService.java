@@ -28,5 +28,6 @@ public interface ILoginService {
      * @param ticket 登录码凭证ticket
      * @param openid openid
      */
-    void saveLoginState(String ticket, String openid) throws IOException;
+    void saveLoginState(String ticket, String openid, String loginTime, String loginIp, String loginLocation) throws IOException;
+
 }

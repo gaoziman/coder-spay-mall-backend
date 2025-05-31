@@ -46,7 +46,7 @@ public interface IWeixinApiService {
 
     /**
      * 发送微信公众号模板消息
-     * 文档：https://mp.weixin.qq.com/debug/cgi-bin/readtmpl?t=tmplmsg/faq_tmpl
+     * 文档：<a href="https://mp.weixin.qq.com/debug/cgi-bin/readtmpl?t=tmplmsg/faq_tmpl">...</a>
      *
      * @param accessToken              getToken 获取的 token 信息
      * @param weixinTemplateMessageVO 入参对象
