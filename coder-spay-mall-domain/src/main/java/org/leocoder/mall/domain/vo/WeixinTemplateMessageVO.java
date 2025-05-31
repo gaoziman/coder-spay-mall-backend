@@ -11,9 +11,9 @@ import java.util.Map;
  */
 public class WeixinTemplateMessageVO {
 
-    private String touser = "or0Ab6ivwmypESVp_bYuk92T6SvU";
-    private String template_id = "GLlAM-Q4jdgsktdNd35hnEbHVam2mwsW2YWuxDhpQkU";
-    private String url = "https://weixin.qq.com";
+    private String touser;
+    private String template_id;
+    private String url;
     private Map<String, Map<String, String>> data = new HashMap<>();
 
     public WeixinTemplateMessageVO(String touser, String template_id) {
@@ -21,30 +21,34 @@ public class WeixinTemplateMessageVO {
         this.template_id = template_id;
     }
 
+    // 实例方法put
     public void put(TemplateKey key, String value) {
-        data.put(key.getCode(), new HashMap<String, String>() {
-            private static final long serialVersionUID = 7092338402387318563L;
-
-            {
-                put("value", value);
-            }
-        });
+        Map<String, String> item = new HashMap<>();
+        item.put("value", value);
+        item.put("color", "#173177");
+        data.put(key.getCode(), item);
     }
 
+    // 静态方法put
+    public static void put(Map<String, Map<String, String>> data, TemplateKey key, String value, String color) {
+        Map<String, String> item = new HashMap<>();
+        item.put("value", value);
+        item.put("color", color);
+        data.put(key.getCode(), item);
+    }
     public static void put(Map<String, Map<String, String>> data, TemplateKey key, String value) {
-        data.put(key.getCode(), new HashMap<String, String>() {
-            private static final long serialVersionUID = 7092338402387318563L;
-
-            {
-                put("value", value);
-            }
-        });
+        put(data, key, value, "#173177");
     }
 
 
+    // 枚举：模板消息字段，全部补全！
     public enum TemplateKey {
-        USER("user","用户ID")
-        ;
+        userName("userName", "登录用户"),
+        loginTime("loginTime", "登录时间"),
+        loginIp("loginIp", "登录IP"),
+        loginLocation("loginLocation", "登录地点"),
+        remark("remark", "备注");
+        // 可扩展更多字段
 
         private String code;
         private String desc;
@@ -71,7 +75,7 @@ public class WeixinTemplateMessageVO {
         }
     }
 
-
+    // Getter & Setter
     public String getTouser() {
         return touser;
     }
@@ -103,5 +107,4 @@ public class WeixinTemplateMessageVO {
     public void setData(Map<String, Map<String, String>> data) {
         this.data = data;
     }
-
 }

@@ -1,10 +1,10 @@
 package org.leocoder.web;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.core.env.Environment;
 
 /**
@@ -19,7 +19,7 @@ import org.springframework.core.env.Environment;
         "org.leocoder.mall.dao"
 })
 @Configurable
-@ComponentScan("org.leocoder.mall.dao")
+@MapperScan("org.leocoder.mall.dao")
 public class MainApplication {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(MainApplication.class, args);
