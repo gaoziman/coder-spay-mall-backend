@@ -11,8 +11,13 @@ import lombok.Data;
 @Data
 public class WeixinQrCodeRes {
 
+    /* 二维码ticket */
     private String ticket;
+
+    /* 二维码图片地址 */
     private Long expire_seconds;
+
+    /* 二维码图片地址 */
     private String url;
 
 }

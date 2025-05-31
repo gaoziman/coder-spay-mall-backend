@@ -1,7 +1,6 @@
 package org.leocoder.mall.service.impl;
 
 import com.google.common.cache.Cache;
-import lombok.RequiredArgsConstructor;
 import org.leocoder.mall.domain.req.WeixinQrCodeReq;
 import org.leocoder.mall.domain.resp.WeixinQrCodeRes;
 import org.leocoder.mall.domain.resp.WeixinTokenRes;
@@ -12,20 +11,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import retrofit2.Call;
 
+import javax.annotation.Resource;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @author : 程序员Leo
- * @version 1.0
- * @date 2025-05-30 21:45
- * @description : ILoginService 实现类
+ * @author Fuzhengwei bugstack.cn @小傅哥
+ * @description 微信服务
+ * @create 2024-09-28 13:46
  */
 @Service
-@RequiredArgsConstructor
-public class ILoginServiceImpl  implements ILoginService {
-
+public class WeixinLoginServiceImpl implements ILoginService {
 
     @Value("${weixin.config.app-id}")
     private String appid;
@@ -34,18 +31,13 @@ public class ILoginServiceImpl  implements ILoginService {
     @Value("${weixin.config.template_id}")
     private String template_id;
 
+    @Resource
+    private Cache<String, String> weixinAccessToken;
+    @Resource
+    private IWeixinApiService weixinApiService;
+    @Resource
+    private Cache<String, String> openidToken;
 
-    private final Cache<String, String> weixinAccessToken;
-
-    private final IWeixinApiService weixinApiService;
-
-    private final Cache<String, String> openidToken;
-
-
-    /**
-     * 创建ticket
-     * @return 登录码凭证ticket
-     */
     @Override
     public String createQrCodeTicket() throws IOException {
         // 1. 获取 accessToken
@@ -75,23 +67,11 @@ public class ILoginServiceImpl  implements ILoginService {
         return weixinQrCodeRes.getTicket();
     }
 
-
-    /**
-     * 校验是否登录
-     * @param ticket 登录码凭证ticket
-     * @return openid
-     */
     @Override
     public String checkLogin(String ticket) {
         return openidToken.getIfPresent(ticket);
     }
 
-
-    /**
-     * 保存登录状态
-     * @param ticket 登录码凭证ticket
-     * @param openid openid
-     */
     @Override
     public void saveLoginState(String ticket, String openid) throws IOException {
         openidToken.put(ticket, openid);
@@ -116,5 +96,7 @@ public class ILoginServiceImpl  implements ILoginService {
 
         Call<Void> call = weixinApiService.sendMessage(accessToken, templateMessageDTO);
         call.execute();
+
     }
+
 }

@@ -15,7 +15,9 @@ import lombok.*;
 public class WeixinQrCodeReq {
 
     private int expire_seconds;
+
     private String action_name;
+
     private ActionInfo action_info;
 
     @Data
